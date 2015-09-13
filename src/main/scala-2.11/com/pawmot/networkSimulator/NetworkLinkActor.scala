@@ -16,10 +16,12 @@ class NetworkLinkActor extends Actor {
     case Fix => ()
 
     case ConnectTo(socket) =>
-      if(connectedPeers.size < 2)
+      if(connectedPeers.size < 2) {
         connectedPeers ::= socket
+        socket ! Connected
+      }
 
-    case packet@(Message(_) | RIPSummary(_)) =>
+    case packet@(Message(_, _) | RIPSummary(_)) =>
       val s = sender()
       val other = connectedPeers.filter(socket => socket != s).head
       other ! packet
@@ -30,4 +32,5 @@ object NetworkLinkActor {
   case class ConnectTo(socket: ActorRef)
   case object Break
   case object Fix
+  case object Connected
 }
