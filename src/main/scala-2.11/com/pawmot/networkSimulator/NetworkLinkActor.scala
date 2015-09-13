@@ -1,9 +1,9 @@
-package com.pawmot.networkSimulation
+package com.pawmot.networkSimulator
 
 import akka.actor.{ActorRef, Actor}
 
 class NetworkLinkActor extends Actor {
-  import com.pawmot.networkSimulation.NetworkLinkActor._
+  import com.pawmot.networkSimulator.NetworkLinkActor._
   import context._
 
   var connectedPeers = List[ActorRef]()

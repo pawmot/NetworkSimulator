@@ -1,9 +1,9 @@
-package tests
+package com.pawmot.networkSimulator.tests
 
 import akka.actor.{ActorRef, ActorSystem, Props}
-import akka.testkit.{TestProbe, TestKit}
-import com.pawmot.networkSimulation.NetworkLinkActor.{Fix, Break, ConnectTo}
-import com.pawmot.networkSimulation.{Message, NetworkLinkActor}
+import akka.testkit._
+import com.pawmot.networkSimulator.NetworkLinkActor.{Break, ConnectTo, Fix}
+import com.pawmot.networkSimulator.{Message, NetworkLinkActor}
 import org.scalatest._
 
 import scala.concurrent.Await

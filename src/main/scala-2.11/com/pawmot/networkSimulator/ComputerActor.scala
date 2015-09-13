@@ -1,4 +1,4 @@
-package com.pawmot.networkSimulation
+package com.pawmot.networkSimulator
 
 import akka.actor.Actor
 
