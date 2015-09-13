@@ -1,9 +1,19 @@
 package com.pawmot.networkSimulator
 
-import akka.actor.Actor
+import akka.actor.{ActorRef, Actor}
+import com.pawmot.networkSimulator.ComputerActor.SendMessage
+import com.pawmot.networkSimulator.NetworkLinkActor.Connected
 
 class ComputerActor extends Actor {
-  override def receive: Receive = ???
+  var link: Option[ActorRef] = None
+
+  override def receive: Receive = {
+    case Connected =>
+      link = Some(sender())
+
+    case SendMessage(content, addr) =>
+      link.foreach(l => l ! Message(content, addr))
+  }
 }
 
 object ComputerActor {
