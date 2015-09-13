@@ -9,7 +9,6 @@ import com.pawmot.networkSimulator.{Message, NetworkLinkActor}
 import scala.language.postfixOps
 
 class NetworkLinkActorSpec extends UnitSpec[NetworkLinkActor](ActorSystem("NetworkLinkActorSpec")) {
-
   "NetworkLinkActor" should {
     "transmit message after being connected" in {
       val a = makeActor()
@@ -20,9 +19,9 @@ class NetworkLinkActorSpec extends UnitSpec[NetworkLinkActor](ActorSystem("Netwo
       a ! ConnectTo(p1.ref)
       a ! ConnectTo(p2.ref)
 
-      a.tell(Message("SYN"), p1.ref)
+      a.tell(Message("SYN", 10), p1.ref)
 
-      p2.expectMsg(Message("SYN"))
+      p2.expectMsg(Message("SYN", 10))
     }
 
     "not transmit message if it's broken" in {
@@ -35,7 +34,7 @@ class NetworkLinkActorSpec extends UnitSpec[NetworkLinkActor](ActorSystem("Netwo
       a ! ConnectTo(p2.ref)
       a ! Break
 
-      a.tell(Message("SYN"), p1.ref)
+      a.tell(Message("SYN", 10), p1.ref)
 
       p2.expectNoMsg()
     }
@@ -51,9 +50,9 @@ class NetworkLinkActorSpec extends UnitSpec[NetworkLinkActor](ActorSystem("Netwo
       a ! Break
       a ! Fix
 
-      a.tell(Message("SYN"), p1.ref)
+      a.tell(Message("SYN", 10), p1.ref)
 
-      p2.expectMsg(Message("SYN"))
+      p2.expectMsg(Message("SYN", 10))
     }
   }
 }
