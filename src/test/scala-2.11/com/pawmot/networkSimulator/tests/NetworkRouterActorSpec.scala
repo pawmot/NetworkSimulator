@@ -1,11 +1,13 @@
 package com.pawmot.networkSimulator.tests
 
 import akka.actor.ActorSystem
-import akka.testkit.TestProbe
-import com.pawmot.networkSimulator.{Message, RoutingEntry, NetworkRouterActor}
+import akka.testkit.{TestActorRef, TestProbe}
 import com.pawmot.networkSimulator.tests.util.UnitSpec
+import com.pawmot.networkSimulator.{Message, NetworkRouterActor, RoutingEntry}
 
 class NetworkRouterActorSpec extends UnitSpec[NetworkRouterActor](ActorSystem("NetworkRouterActorSpec")) {
+  override def makeActor(): TestActorRef[NetworkRouterActor] = TestActorRef(new NetworkRouterActor(10))
+
   "NetworkRouterActor" should {
     val a = makeActor()
 
