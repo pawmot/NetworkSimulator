@@ -24,6 +24,8 @@ class NetworkRouterActor(val Addr: Int) extends Actor with NetworkDevice {
         enabled = true
         for(l <- links) l ! RIPv1Request
       }
+
+    case RIPv1Request => sender() ! RIPv1Response
   }
 
   override def handle(content: String): Unit = {}
@@ -32,4 +34,5 @@ class NetworkRouterActor(val Addr: Int) extends Actor with NetworkDevice {
 object NetworkRouterActor {
   case object Enable
   case object RIPv1Request
+  case object RIPv1Response
 }
