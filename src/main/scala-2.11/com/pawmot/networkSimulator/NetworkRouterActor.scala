@@ -25,14 +25,20 @@ class NetworkRouterActor(val Addr: Int) extends Actor with NetworkDevice {
         for(l <- links) l ! RIPv1Request
       }
 
-    case RIPv1Request => sender() ! RIPv1Response
+    case RIPv1Request => sender() ! RIPv1Response(tableToShare)
   }
 
   override def handle(content: String): Unit = {}
+
+  private def tableToShare = {
+    val s = sender()
+
+    routingTable.filter(kvp => kvp._2.link != s).map(kvp => (kvp._1, kvp._2.hops)).toMap
+  }
 }
 
 object NetworkRouterActor {
   case object Enable
   case object RIPv1Request
-  case object RIPv1Response
+  case class RIPv1Response(table: Map[Int, Byte])
 }
